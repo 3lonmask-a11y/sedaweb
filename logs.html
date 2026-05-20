@@ -3,200 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily Logs — Seda Portfolio</title>
+  <title>Мои логи прогресса — Sedaweb</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    body {
-      margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background: #f7f1ea;
-      color: #241f1c;
-    }
-
-    .logs-page {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 56px 20px 80px;
-    }
-
-    .logs-header {
-      margin-bottom: 36px;
-    }
-
-    .logs-kicker {
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #9b6f55;
-      margin-bottom: 12px;
-    }
-
-    .logs-title {
-      font-size: clamp(36px, 7vw, 72px);
-      line-height: 0.95;
-      margin: 0 0 18px;
-      letter-spacing: -0.05em;
-    }
-
-    .logs-subtitle {
-      max-width: 640px;
-      font-size: 18px;
-      line-height: 1.55;
-      color: #5d514b;
-      margin: 0;
-    }
-
-    .logs-nav {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin: 28px 0 0;
-    }
-
-    .logs-nav a {
-      color: #241f1c;
-      text-decoration: none;
-      border: 1px solid rgba(36, 31, 28, 0.18);
-      border-radius: 999px;
-      padding: 10px 16px;
-      background: rgba(255, 255, 255, 0.55);
-    }
-
-    .logs-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin: 34px 0;
-    }
-
-    .stat-card {
-      background: rgba(255, 255, 255, 0.72);
-      border: 1px solid rgba(36, 31, 28, 0.08);
-      border-radius: 24px;
-      padding: 22px;
-      box-shadow: 0 18px 45px rgba(80, 55, 35, 0.08);
-    }
-
-    .stat-number {
-      font-size: 34px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-    }
-
-    .stat-label {
-      margin-top: 6px;
-      color: #7a665b;
-      font-size: 14px;
-    }
-
-    .log-list {
-      display: grid;
-      gap: 18px;
-      margin-top: 30px;
-    }
-
-    .log-card {
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(36, 31, 28, 0.09);
-      border-radius: 28px;
-      padding: 26px;
-      box-shadow: 0 20px 55px rgba(80, 55, 35, 0.08);
-    }
-
-    .log-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: flex-start;
-      margin-bottom: 14px;
-    }
-
-    .log-date {
-      color: #9b6f55;
-      font-size: 14px;
-      white-space: nowrap;
-    }
-
-    .log-category {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      background: #241f1c;
-      color: #fff;
-      padding: 7px 12px;
-      font-size: 12px;
-      margin-bottom: 14px;
-    }
-
-    .log-title {
-      font-size: 26px;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin: 0;
-    }
-
-    .log-section {
-      margin-top: 18px;
-    }
-
-    .log-label {
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #9b6f55;
-      margin-bottom: 6px;
-      font-weight: 700;
-    }
-
-    .log-text {
-      color: #4f4540;
-      font-size: 16px;
-      line-height: 1.55;
-      margin: 0;
-    }
-
-    .empty {
-      background: rgba(255, 255, 255, 0.7);
-      border-radius: 24px;
-      padding: 26px;
-      color: #6b5d55;
-    }
-
-    @media (max-width: 720px) {
-      .logs-stats {
-        grid-template-columns: 1fr;
-      }
-
-      .log-top {
-        flex-direction: column;
-      }
-
-      .log-date {
-        white-space: normal;
-      }
-    }
-  </style>
 </head>
 <body>
-  <main class="logs-page">
-    <header class="logs-header">
-      <div class="logs-kicker">Daily Proof Archive</div>
-      <h1 class="logs-title">Мои логи прогресса</h1>
-      <p class="logs-subtitle">
-        Это не просто дневник. Это портфолио движения: что я сделала, чему научилась,
-        какой результат получила и какой следующий шаг выбираю.
-      </p>
+  <main class="page-shell">
+    <nav class="top-nav">
+      <a href="index.html">Главная</a>
+      <a href="admin.html">Добавить лог</a>
+      <a href="setup.html">Настройка</a>
+    </nav>
 
-      <nav class="logs-nav">
-        <a href="index.html">Главная</a>
-        <a href="#logs">Все записи</a>
-      </nav>
+    <header class="page-header">
+      <div class="kicker">Daily Proof Archive</div>
+      <h1>Мои логи прогресса</h1>
+      <p>
+        Каждый лог — это маленькое доказательство: день был прожит не в пустоту,
+        а в сторону навыков, красоты, денег, карьеры и взрослой жизни.
+      </p>
     </header>
 
-    <section class="logs-stats">
+    <section class="stats-grid">
       <div class="stat-card">
         <div class="stat-number" id="totalLogs">0</div>
-        <div class="stat-label">записей добавлено</div>
+        <div class="stat-label">публичных записей</div>
       </div>
 
       <div class="stat-card">
@@ -210,17 +40,36 @@
       </div>
     </section>
 
-    <section id="logs" class="log-list"></section>
+    <section id="statusBox" class="notice">Загрузка логов...</section>
+    <section id="logList" class="log-list" aria-live="polite"></section>
   </main>
 
-  <script src="logs-data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
-    const logList = document.getElementById("logs");
+    const logList = document.getElementById("logList");
+    const statusBox = document.getElementById("statusBox");
     const totalLogs = document.getElementById("totalLogs");
     const latestDate = document.getElementById("latestDate");
 
+    function escapeHTML(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
     function formatDate(dateString) {
+      if (!dateString) return "—";
+
       const date = new Date(dateString + "T00:00:00");
+
+      if (Number.isNaN(date.getTime())) {
+        return dateString;
+      }
+
       return date.toLocaleDateString("ru-RU", {
         day: "numeric",
         month: "long",
@@ -228,55 +77,81 @@
       });
     }
 
-    function renderLogs() {
-      if (!Array.isArray(logs) || logs.length === 0) {
-        logList.innerHTML = '<div class="empty">Пока записей нет. Добавь первый лог в файл logs-data.js.</div>';
+    function renderLogs(logs) {
+      if (!logs.length) {
+        statusBox.className = "notice";
+        statusBox.textContent = "Пока публичных логов нет. Добавь первый лог через admin.html.";
+        logList.innerHTML = "";
         totalLogs.textContent = "0";
         latestDate.textContent = "—";
         return;
       }
 
-      const sortedLogs = [...logs].sort((a, b) => new Date(b.date) - new Date(a.date));
+      statusBox.style.display = "none";
+      totalLogs.textContent = String(logs.length);
+      latestDate.textContent = formatDate(logs[0].date);
 
-      totalLogs.textContent = sortedLogs.length;
-      latestDate.textContent = formatDate(sortedLogs[0].date);
-
-      logList.innerHTML = sortedLogs.map((log) => {
+      logList.innerHTML = logs.map((log) => {
         return `
           <article class="log-card">
             <div class="log-top">
               <div>
-                <div class="log-category">${log.category}</div>
-                <h2 class="log-title">${log.title}</h2>
+                <div class="log-category">${escapeHTML(log.category)}</div>
+                <h2 class="log-title">${escapeHTML(log.title)}</h2>
               </div>
               <div class="log-date">${formatDate(log.date)}</div>
             </div>
 
             <div class="log-section">
               <div class="log-label">Состояние</div>
-              <p class="log-text">${log.mood}</p>
+              <p class="log-text">${escapeHTML(log.mood)}</p>
             </div>
 
             <div class="log-section">
               <div class="log-label">Что сделано</div>
-              <p class="log-text">${log.proof}</p>
+              <p class="log-text">${escapeHTML(log.proof)}</p>
             </div>
 
             <div class="log-section">
               <div class="log-label">Результат</div>
-              <p class="log-text">${log.result}</p>
+              <p class="log-text">${escapeHTML(log.result)}</p>
             </div>
 
             <div class="log-section">
               <div class="log-label">Следующий шаг</div>
-              <p class="log-text">${log.next}</p>
+              <p class="log-text">${escapeHTML(log.next_step)}</p>
             </div>
           </article>
         `;
       }).join("");
     }
 
-    renderLogs();
+    async function loadLogs() {
+      if (!sedaHasSupabaseConfig()) {
+        statusBox.className = "notice error";
+        statusBox.innerHTML = 'Supabase ещё не подключён. Открой <a href="setup.html">setup.html</a>, вставь Project URL и anon public key.';
+        return;
+      }
+
+      const client = sedaCreateSupabaseClient();
+
+      const { data, error } = await client
+        .from(window.SEDA_CONFIG.TABLE_NAME)
+        .select("id,date,title,category,mood,proof,result,next_step,is_public,created_at")
+        .eq("is_public", true)
+        .order("date", { ascending: false })
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        statusBox.className = "notice error";
+        statusBox.textContent = "Ошибка загрузки логов: " + error.message;
+        return;
+      }
+
+      renderLogs(data || []);
+    }
+
+    loadLogs();
   </script>
 </body>
 </html>

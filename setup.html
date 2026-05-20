@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Настройка Supabase — Sedaweb</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <nav class="top-nav">
+      <a href="index.html">Главная</a>
+      <a href="logs.html">Смотреть логи</a>
+      <a href="admin.html">Добавить лог</a>
+    </nav>
+
+    <header class="page-header">
+      <div class="kicker">Setup · Database</div>
+      <h1>Подключить Supabase</h1>
+      <p>
+        GitHub Pages показывает сайт. Supabase хранит логи.
+        Эта страница сохраняет Project URL и anon public key в твоём браузере.
+      </p>
+    </header>
+
+    <section class="panel">
+      <form id="setupForm" class="form-grid">
+        <label>
+          Supabase Project URL
+          <input id="supabaseUrl" type="url" required autocomplete="off" />
+        </label>
+
+        <label>
+          Supabase anon public key
+          <textarea id="supabaseAnonKey" required autocomplete="off"></textarea>
+        </label>
+
+        <button class="primary" type="submit">Сохранить настройки в браузере</button>
+      </form>
+    </section>
+
+    <section id="statusBox" class="notice" style="margin-top: 18px;">Настройки ещё не сохранены.</section>
+
+    <section class="panel" style="margin-top: 18px;">
+      <h2 style="margin-top: 0;">Код для постоянного supabase-config.js</h2>
+      <p class="small">
+        Если хочешь, чтобы logs.html работал не только у тебя в браузере, но и у других людей,
+        после сохранения настроек скопируй код ниже, открой файл supabase-config.js на GitHub,
+        замени им весь файл и нажми Commit changes.
+      </p>
+      <div id="configCode" class="code-box">Сначала сохрани настройки.</div>
+    </section>
+
+    <section class="panel" style="margin-top: 18px;">
+      <h2 style="margin-top: 0;">SQL для Supabase</h2>
+      <p class="small">
+        Этот SQL надо выполнить один раз в Supabase: Project → SQL Editor → New query → Run.
+        Не загружай этот SQL-файл в публичный репозиторий, потому что внутри есть admin key.
+      </p>
+      <div class="code-box">Смотри файл supabase-schema.sql в архиве.</div>
+    </section>
+  </main>
+
+  <script src="supabase-config.js"></script>
+  <script>
+    const form = document.getElementById("setupForm");
+    const statusBox = document.getElementById("statusBox");
+    const configCode = document.getElementById("configCode");
+    const urlInput = document.getElementById("supabaseUrl");
+    const keyInput = document.getElementById("supabaseAnonKey");
+
+    urlInput.value = localStorage.getItem("SEDA_SUPABASE_URL") || "";
+    keyInput.value = localStorage.getItem("SEDA_SUPABASE_ANON_KEY") || "";
+
+    function buildPermanentConfig(url, anonKey) {
+      return `window.SEDA_CONFIG = {
+  SUPABASE_URL: "${url}",
+  SUPABASE_ANON_KEY: "${anonKey}",
+  TABLE_NAME: "daily_logs"
+};
+
+function sedaHasSupabaseConfig() {
+  return Boolean(
+    window.SEDA_CONFIG &&
+    window.SEDA_CONFIG.SUPABASE_URL &&
+    window.SEDA_CONFIG.SUPABASE_ANON_KEY
+  );
+}
+
+function sedaCreateSupabaseClient(writeKey) {
+  if (!sedaHasSupabaseConfig()) {
+    return null;
+  }
+
+  const options = writeKey
+    ? { global: { headers: { "x-write-key": writeKey } } }
+    : {};
+
+  return window.supabase.createClient(
+    window.SEDA_CONFIG.SUPABASE_URL,
+    window.SEDA_CONFIG.SUPABASE_ANON_KEY,
+    options
+  );
+}`;
+    }
+
+    function refreshConfigCode() {
+      const url = localStorage.getItem("SEDA_SUPABASE_URL") || "";
+      const anonKey = localStorage.getItem("SEDA_SUPABASE_ANON_KEY") || "";
+
+      if (!url || !anonKey) {
+        configCode.textContent = "Сначала сохрани настройки.";
+        return;
+      }
+
+      configCode.textContent = buildPermanentConfig(url, anonKey);
+      statusBox.className = "notice success";
+      statusBox.textContent = "Настройки сохранены в этом браузере.";
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const url = urlInput.value.trim();
+      const anonKey = keyInput.value.trim();
+
+      localStorage.setItem("SEDA_SUPABASE_URL", url);
+      localStorage.setItem("SEDA_SUPABASE_ANON_KEY", anonKey);
+
+      refreshConfigCode();
+    });
+
+    refreshConfigCode();
+  </script>
+</body>
+</html>

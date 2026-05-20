@@ -1,142 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tanzila Ulanova — личный сайт</title>
-  <meta name="description" content="Личный сайт Tanzila Ulanova: красота, взрослая жизнь, забота о себе, эстетика и движение к свободе.">
-  <meta property="og:title" content="Tanzila Ulanova — личный сайт">
-  <meta property="og:description" content="Красота, взрослая жизнь, забота о себе, эстетика и движение к свободе.">
-  <meta property="og:type" content="website">
-  <meta name="theme-color" content="#f4d7df">
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sedaweb — Progress OS</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <a class="logo" href="#top" aria-label="На главную">TU</a>
-
-    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
-      Меню
-    </button>
-
-    <nav id="site-nav" class="site-nav" aria-label="Основная навигация">
-      <a href="#about">О сайте</a>
-      <a href="#directions">Направления</a>
-      <a href="#journal">Журнал</a>
-      <a href="#contact">Связь</a>
-    </nav>
-  </header>
-
-  <main id="top">
+  <main class="page-shell">
     <section class="hero">
-      <div class="hero-content">
-        <p class="eyebrow">Личный сайт вместо конструктора</p>
-        <h1>Красивое пространство в интернете, которое принадлежит тебе.</h1>
-        <p class="hero-text">
-          Здесь можно собрать личную страницу, портфолио, блог, визуальную биографию или мягкую витрину будущих услуг — без ежемесячной подписки на конструктор.
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="#contact">Открыть контакты</a>
-          <a class="button secondary" href="#directions">Посмотреть структуру</a>
-        </div>
-      </div>
+      <div class="kicker">Sedaweb · личная система прогресса</div>
+      <h1>Сайт, который каждый день собирает доказательства твоего движения.</h1>
+      <p>
+        Здесь можно вести публичные или личные логи: что сделано, какой результат появился,
+        чему ты научилась и какой следующий шаг выбираешь.
+      </p>
 
-      <aside class="hero-card" aria-label="Краткое описание проекта">
-        <span class="card-label">site mode</span>
-        <h2>Жизнь · красота · взрослость</h2>
-        <p>
-          Чистая страница для личного бренда: эстетика, уверенность, забота о себе, карьера и движение в сторону своей жизни.
-        </p>
-      </aside>
-    </section>
-
-    <section id="about" class="section split">
-      <div>
-        <p class="section-kicker">Зачем это</p>
-        <h2>Это не просто «код на макбуке». Это база для сайта, который можно опубликовать.</h2>
-      </div>
-      <div class="text-block">
-        <p>
-          Проект состоит из обычных файлов: главная страница, стили, небольшой JavaScript и инструкция. Их можно загрузить на GitHub, включить GitHub Pages — и сайт получит публичную ссылку.
-        </p>
-        <p>
-          Когда захочется поменять текст, цвета или блоки, ты редактируешь файлы и отправляешь изменения в GitHub. Хостинг сам обновляет опубликованную версию.
-        </p>
+      <div class="button-row">
+        <a class="button primary" href="logs.html">Смотреть логи</a>
+        <a class="button secondary" href="admin.html">Добавить лог</a>
+        <a class="button ghost" href="setup.html">Настройка Supabase</a>
       </div>
     </section>
 
-    <section id="directions" class="section">
-      <p class="section-kicker">Структура</p>
-      <h2>Что можно держать на таком сайте</h2>
+    <section class="cards-grid">
+      <article class="info-card">
+        <span>01</span>
+        <h2>Daily Logs</h2>
+        <p>Короткие ежедневные записи, чтобы день не исчезал бесследно.</p>
+      </article>
 
-      <div class="cards-grid">
-        <article class="card">
-          <span>01</span>
-          <h3>Личная страница</h3>
-          <p>Кто ты, чем занимаешься, куда движешься, какой у тебя визуальный и жизненный вектор.</p>
-        </article>
+      <article class="info-card">
+        <span>02</span>
+        <h2>Portfolio Proof</h2>
+        <p>Не абстрактная мотивация, а конкретные доказательства навыков, действий и результата.</p>
+      </article>
 
-        <article class="card">
-          <span>02</span>
-          <h3>Портфолио</h3>
-          <p>Фотографии, кейсы, до/после, проекты, заметки, обучение, будущие beauty-направления.</p>
-        </article>
-
-        <article class="card">
-          <span>03</span>
-          <h3>Журнал</h3>
-          <p>Мини-блог: мысли, наблюдения, эстетические подборки, личные выводы, сторителлинг.</p>
-        </article>
-
-        <article class="card">
-          <span>04</span>
-          <h3>Контакты</h3>
-          <p>Ссылка на Instagram, Telegram, email, форму записи или любой другой канал связи.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="journal" class="section journal">
-      <div class="journal-heading">
-        <p class="section-kicker">Журнал</p>
-        <h2>Пример блока для заметок</h2>
-      </div>
-
-      <article class="journal-post">
-        <p class="post-date">Май 2026</p>
-        <h3>Сайт как личная территория</h3>
-        <p>
-          Конструктор удобен, пока ты платишь. Собственный статический сайт проще: меньше зависимости, больше контроля, понятная структура и возможность постепенно вырастить это в личный бренд, блог или витрину услуг.
-        </p>
+      <article class="info-card">
+        <span>03</span>
+        <h2>Progress OS</h2>
+        <p>Личная операционная система: красота, карьера, деньги, обучение, взрослая жизнь.</p>
       </article>
     </section>
-
-    <section id="contact" class="section contact">
-      <div>
-        <p class="section-kicker">Связь</p>
-        <h2>Один сайт может стать центром всей твоей онлайн-системы.</h2>
-      </div>
-      <div class="contact-panel">
-        <p>
-          Сейчас кнопка ведёт в Instagram. Позже сюда можно добавить Telegram, запись, форму заявки, прайс, карту, блог и отдельные страницы.
-        </p>
-        <a class="button primary" href="https://www.instagram.com/tanzilaulanova" target="_blank" rel="noreferrer">
-          Instagram @tanzilaulanova
-        </a>
-      </div>
-    </section>
   </main>
-
-  <footer class="site-footer">
-    <p>© 2026 Tanzila Ulanova. Собственная страница в интернете.</p>
-    <a href="#top">Наверх</a>
-  </footer>
-
-  <script src="script.js"></script><section style="padding: 40px 20px; text-align: center;">
-  <a href="logs.html" style="display: inline-block; padding: 14px 22px; border-radius: 999px; background: #241f1c; color: white; text-decoration: none; font-family: Arial, sans-serif;">
-    Открыть мои логи прогресса
-  </a>
-</section>
 </body>
 </html>

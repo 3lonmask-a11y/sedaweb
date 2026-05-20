@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Добавить лог — Sedaweb</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <nav class="top-nav">
+      <a href="index.html">Главная</a>
+      <a href="logs.html">Смотреть логи</a>
+      <a href="setup.html">Настройка</a>
+    </nav>
+
+    <header class="page-header">
+      <div class="kicker">Admin · Daily Entry</div>
+      <h1>Добавить новый лог</h1>
+      <p>
+        Это твоя ежедневная точка сборки. Не надо писать идеально.
+        Надо оставить доказательство, что день был использован.
+      </p>
+    </header>
+
+    <section id="configNotice" class="notice"></section>
+
+    <section class="panel">
+      <form id="logForm" class="form-grid">
+        <label>
+          Admin key
+          <input id="writeKey" type="password" autocomplete="current-password" required />
+          <span class="small">
+            Если ты выполнила SQL из файла supabase-schema.sql без изменений, ключ: seda-secret-write-key-2026
+          </span>
+        </label>
+
+        <label>
+          Дата
+          <input id="date" type="date" required />
+        </label>
+
+        <label>
+          Заголовок
+          <input id="title" type="text" maxlength="120" required value="Новый день прогресса" />
+        </label>
+
+        <label>
+          Категория
+          <select id="category" required>
+            <option value="Daily Life">Daily Life</option>
+            <option value="Tech / Website">Tech / Website</option>
+            <option value="Beauty / Medicine">Beauty / Medicine</option>
+            <option value="Money / Career">Money / Career</option>
+            <option value="Personal Power">Personal Power</option>
+            <option value="Learning">Learning</option>
+            <option value="Relationship / Family">Relationship / Family</option>
+          </select>
+        </label>
+
+        <label>
+          Состояние
+          <textarea id="mood" required>Собираю себя и фиксирую движение.</textarea>
+        </label>
+
+        <label>
+          Что сделано
+          <textarea id="proof" required>Сегодня я сделала конкретный шаг, который можно зафиксировать.</textarea>
+        </label>
+
+        <label>
+          Результат
+          <textarea id="result" required>Появилось больше ясности, структуры и контроля над своим движением.</textarea>
+        </label>
+
+        <label>
+          Следующий шаг
+          <textarea id="next_step" required>Завтра я сделаю следующий маленький, но реальный шаг.</textarea>
+        </label>
+
+        <label class="checkbox-line">
+          <input id="is_public" type="checkbox" checked />
+          Показывать этот лог публично на logs.html
+        </label>
+
+        <button class="primary" type="submit">Сохранить лог</button>
+      </form>
+    </section>
+
+    <section id="statusBox" class="notice" style="margin-top: 18px;">Готово к заполнению.</section>
+
+    <section class="panel" style="margin-top: 18px;">
+      <h2 style="margin-top:0;">Последние записи</h2>
+      <div id="adminLogList" class="log-list"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    const form = document.getElementById("logForm");
+    const statusBox = document.getElementById("statusBox");
+    const configNotice = document.getElementById("configNotice");
+    const adminLogList = document.getElementById("adminLogList");
+    const writeKeyInput = document.getElementById("writeKey");
+
+    const savedWriteKey = localStorage.getItem("SEDA_WRITE_KEY") || "";
+    writeKeyInput.value = savedWriteKey;
+
+    document.getElementById("date").valueAsDate = new Date();
+
+    if (sedaHasSupabaseConfig()) {
+      configNotice.className = "notice success";
+      configNotice.textContent = "Supabase подключён. Можно добавлять записи.";
+    } else {
+      configNotice.className = "notice error";
+      configNotice.innerHTML = 'Supabase ещё не подключён. Сначала открой <a href="setup.html">setup.html</a>.';
+    }
+
+    function escapeHTML(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return "—";
+      const date = new Date(dateString + "T00:00:00");
+
+      if (Number.isNaN(date.getTime())) {
+        return dateString;
+      }
+
+      return date.toLocaleDateString("ru-RU", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+    }
+
+    function getClientWithWriteKey() {
+      const writeKey = writeKeyInput.value.trim();
+      return sedaCreateSupabaseClient(writeKey);
+    }
+
+    async function loadAdminLogs() {
+      if (!sedaHasSupabaseConfig()) {
+        adminLogList.innerHTML = '<div class="notice error">Нет подключения к Supabase.</div>';
+        return;
+      }
+
+      const client = getClientWithWriteKey();
+
+      if (!client) {
+        adminLogList.innerHTML = '<div class="notice error">Не получилось создать Supabase client.</div>';
+        return;
+      }
+
+      const { data, error } = await client
+        .from(window.SEDA_CONFIG.TABLE_NAME)
+        .select("id,date,title,category,mood,proof,result,next_step,is_public,created_at")
+        .order("date", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(20);
+
+      if (error) {
+        adminLogList.innerHTML = '<div class="notice error">Не могу загрузить последние записи: ' + escapeHTML(error.message) + '</div>';
+        return;
+      }
+
+      if (!data || !data.length) {
+        adminLogList.innerHTML = '<div class="notice">Пока записей нет.</div>';
+        return;
+      }
+
+      adminLogList.innerHTML = data.map((log) => {
+        return `
+          <article class="log-card">
+            <div class="log-top">
+              <div>
+                <div class="log-category">${escapeHTML(log.category)} · ${log.is_public ? "public" : "private"}</div>
+                <h2 class="log-title">${escapeHTML(log.title)}</h2>
+              </div>
+              <div class="log-date">${formatDate(log.date)}</div>
+            </div>
+            <div class="log-section">
+              <div class="log-label">Что сделано</div>
+              <p class="log-text">${escapeHTML(log.proof)}</p>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!sedaHasSupabaseConfig()) {
+        statusBox.className = "notice error";
+        statusBox.textContent = "Сначала подключи Supabase через setup.html.";
+        return;
+      }
+
+      const writeKey = writeKeyInput.value.trim();
+
+      if (!writeKey) {
+        statusBox.className = "notice error";
+        statusBox.textContent = "Введи admin key.";
+        return;
+      }
+
+      localStorage.setItem("SEDA_WRITE_KEY", writeKey);
+
+      const client = getClientWithWriteKey();
+
+      const payload = {
+        date: document.getElementById("date").value,
+        title: document.getElementById("title").value.trim(),
+        category: document.getElementById("category").value,
+        mood: document.getElementById("mood").value.trim(),
+        proof: document.getElementById("proof").value.trim(),
+        result: document.getElementById("result").value.trim(),
+        next_step: document.getElementById("next_step").value.trim(),
+        is_public: document.getElementById("is_public").checked
+      };
+
+      const { error } = await client
+        .from(window.SEDA_CONFIG.TABLE_NAME)
+        .insert(payload);
+
+      if (error) {
+        statusBox.className = "notice error";
+        statusBox.textContent = "Ошибка сохранения: " + error.message;
+        return;
+      }
+
+      statusBox.className = "notice success";
+      statusBox.textContent = "Лог сохранён. Если он публичный, он появится на logs.html.";
+
+      form.reset();
+      document.getElementById("date").valueAsDate = new Date();
+      document.getElementById("title").value = "Новый день прогресса";
+      document.getElementById("category").value = "Daily Life";
+      document.getElementById("mood").value = "Собираю себя и фиксирую движение.";
+      document.getElementById("proof").value = "Сегодня я сделала конкретный шаг, который можно зафиксировать.";
+      document.getElementById("result").value = "Появилось больше ясности, структуры и контроля над своим движением.";
+      document.getElementById("next_step").value = "Завтра я сделаю следующий маленький, но реальный шаг.";
+      document.getElementById("is_public").checked = true;
+      writeKeyInput.value = writeKey;
+
+      await loadAdminLogs();
+    });
+
+    if (sedaHasSupabaseConfig() && savedWriteKey) {
+      loadAdminLogs();
+    }
+  </script>
+</body>
+</html>

@@ -1,67 +1,31 @@
-# Tanzila Site Starter
+# Sedaweb Dynamic Progress OS
 
-Это готовая папка для простого сайта без Тильды: HTML, CSS, JavaScript и инструкция по публикации.
+Это версия сайта с динамическими логами:
 
-## Что внутри
+- `index.html` — главная
+- `logs.html` — публичная страница логов
+- `admin.html` — форма добавления логов
+- `setup.html` — настройка Supabase
+- `supabase-config.js` — подключение Supabase
+- `supabase-schema.sql` — SQL для создания таблицы и правил доступа
 
-```text
-tanzila-site-starter/
-├── index.html
-├── styles.css
-├── script.js
-├── assets/
-│   └── favicon.svg
-├── .nojekyll
-└── README.md
-```
+## Быстрый запуск
 
-## Как открыть сайт на макбуке
+1. Загрузи файлы в корень репозитория GitHub Pages.
+2. Создай проект в Supabase.
+3. Открой Supabase → SQL Editor → New query.
+4. Вставь содержимое `supabase-schema.sql`.
+5. Нажми Run.
+6. В Supabase открой Project Settings → API.
+7. Скопируй Project URL и anon public key.
+8. Открой на сайте `setup.html`.
+9. Вставь Project URL и anon public key.
+10. Нажми сохранить.
+11. Открой `admin.html`.
+12. В поле Admin key введи: `seda-secret-write-key-2026`.
+13. Добавь первый лог.
+14. Открой `logs.html`.
 
-1. Распакуй архив.
-2. Открой папку `tanzila-site-starter`.
-3. Дважды нажми на файл `index.html`.
-4. Сайт откроется в браузере локально.
+## Важно
 
-## Как опубликовать через GitHub Pages
-
-1. Зарегистрируйся или войди на GitHub.
-2. Создай новый репозиторий с названием `tanzila-site`.
-3. Загрузи в него все файлы из папки `tanzila-site-starter`.
-4. Открой репозиторий на GitHub.
-5. Перейди в `Settings`.
-6. В левом меню открой `Pages`.
-7. В разделе `Build and deployment` выбери:
-   - Source: `Deploy from a branch`
-   - Branch: `main`
-   - Folder: `/root`
-8. Нажми `Save`.
-9. Через несколько минут GitHub покажет публичную ссылку на сайт.
-
-## Как менять текст
-
-Основной текст находится в `index.html`.
-
-Самые важные места:
-- заголовок первого экрана находится внутри тега `<h1>`;
-- описание первого экрана находится внутри класса `hero-text`;
-- блоки структуры находятся в секции `directions`;
-- ссылка на Instagram находится в секции `contact`.
-
-## Как менять внешний вид
-
-Цвета и размеры находятся в `styles.css`.
-
-Главные переменные в начале файла:
-
-```css
-:root {
-  --bg: #fff8f8;
-  --bg-strong: #f4d7df;
-  --text: #24191d;
-  --muted: #735e65;
-}
-```
-
-## Как обновлять опубликованный сайт
-
-После каждой правки загрузи изменённые файлы обратно в GitHub. GitHub Pages сам обновит сайт.
+Файл `supabase-schema.sql` не надо загружать в публичный репозиторий после выполнения, потому что внутри указан admin key.
